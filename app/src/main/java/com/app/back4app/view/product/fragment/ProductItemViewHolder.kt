@@ -12,9 +12,7 @@ import kotlinx.android.synthetic.main.item_product.view.*
 
 class ProductItemViewHolder(override val containerView: View) : BaseViewHolder(containerView) {
     override fun bind(data: Any, position: Int, recyclerItemListener: RecyclerItemListener) {
-//        super.bind(data, position, recyclerItemListener)
-        Log.e("TEST_DATA","data: $data")
-        if(data!= null && data is Product){
+        if(data is Product){
             itemView.tv_product_title.text = data.title
             Glide.with(itemView.context)
                 .load(data.picture?.url)

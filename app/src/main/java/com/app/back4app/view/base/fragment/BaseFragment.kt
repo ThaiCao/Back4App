@@ -21,7 +21,7 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     val container by lazy { view?.findViewById<View>(R.id.container) }
 
-    override fun setTitle(titleKey: String) {
+    override fun setTitle(titleKey: String?) {
         if (activity is BaseActivity) {
             (activity as BaseActivity).setTitle(titleKey)
         }
@@ -33,8 +33,8 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
         initView()
+        initData()
         initListeners()
         initDefaultClickHideKeyboard()
     }

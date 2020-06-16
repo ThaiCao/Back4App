@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.back4app.R
 import com.app.back4app.controller.product.ProductFragmentController
+import com.app.back4app.controller.product.ProductFragmentControllerImpl
 import com.app.back4app.model.product.Product
 import com.app.back4app.view.base.fragment.BaseFragment
 import com.app.back4app.view.productdetail.activity.ProductDetailActivity
@@ -29,9 +30,7 @@ class ProductFragment : BaseFragment(), ProductFragmentView, ProductItemListener
         get() = R.layout.fragment_product
 
     override fun initData() {
-        adapter = ProductAdapter(products, this)
-
-        productController = ProductFragmentController(this)
+        productController = ProductFragmentControllerImpl(this)
         productController.getProducts()
     }
 
@@ -42,25 +41,17 @@ class ProductFragment : BaseFragment(), ProductFragmentView, ProductItemListener
         val layoutManager = LinearLayoutManager (context)
         rv_product.layoutManager = layoutManager
         rv_product.setHasFixedSize(true)
+        adapter = ProductAdapter(products, this)
         rv_product.adapter = adapter
-
     }
 
     override fun onGetProductsCompleted(data: List<Product>, ex: ParseException?) {
         if (ex == null) {
-            if(data !=null && data.isNotEmpty()){
-                for (product in data) {
-                    Log.e("TEST_DATA", "product: ${Gson().toJson(product)}")
-                    Log.e("TEST_DATA", "title: ${product.title}")
-                    Log.e("TEST_DATA", "content: ${product.content}")
-                    Log.e("TEST_DATA", "price: ${product.price}")
-                    Log.e("TEST_DATA", "picture: ${product.picture?.url}")
-                    Log.e("TEST_DATA", "options: ${product.options}")
-                }
+            if(data.isNotEmpty()){
                 adapter.setProducts(data)
             }
         } else {
-            Log.e("TEST_DATA", "Error: " + ex!!.message)
+            Log.e("TEST_DATA", "Error: ${ex.message}")
         }
     }
 

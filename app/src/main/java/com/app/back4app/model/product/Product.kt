@@ -27,7 +27,7 @@ class Product : ParseObject() {
         set(value) = putOrIgnore(KEY_PRICE, value)
 
     var picture: ParseFile?
-        get() = getParseFile(KEY_PICTURE) as ParseFile?
+        get() = getParseFile(KEY_PICTURE)
         set(value) = putOrIgnore(KEY_PICTURE, value)
 
 

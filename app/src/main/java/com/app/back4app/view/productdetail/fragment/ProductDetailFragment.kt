@@ -1,8 +1,9 @@
 package com.app.back4app.view.productdetail.fragment
 
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.back4app.R
+import com.app.back4app.controller.productdetail.ProductDetailFragmentController
+import com.app.back4app.controller.productdetail.ProductDetailFragmentControllerImpl
 import com.app.back4app.model.product.Product
 import com.app.back4app.view.base.fragment.BaseFragment
 import com.app.back4app.view.base.listener.RecyclerItemListener
@@ -20,37 +21,48 @@ class ProductDetailFragment(val product: Product) : BaseFragment(), ProductDetai
         fun newInstance(product: Product) = ProductDetailFragment(product)
     }
 
+    lateinit var productDetailController : ProductDetailFragmentController
+    var adapter: OptionAdapter? = null
+
     override val layoutId: Int
         get() = R.layout.fragment_product_detail
 
     override fun initData() {
-
+        productDetailController = ProductDetailFragmentControllerImpl(this)
+        productDetailController.onLoadData(product)
     }
 
     override fun initListeners() {
+        btn_add_to_cart.setOnClickListener {
+            productDetailController.onAddToCart(product)
+        }
     }
 
     override fun initView() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rv_option.layoutManager = layoutManager
         rv_option.setHasFixedSize(true)
+    }
 
-        if (product != null) {
-            tv_content.text = product.content
-            tv_product_title.text = product.title
-            Glide.with(context)
-                .load(product.picture?.url)
-                .apply(
-                    RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .dontAnimate()
-                        .centerCrop()
-                        .dontTransform()
-                )
-                .into(iv_product)
+    override fun onLoadProductData(product: Product) {
+        tv_content.text = product.content
+        tv_product_title.text = product.title
+        Glide.with(context)
+            .load(product.picture?.url)
+            .apply(
+                RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .dontAnimate()
+                    .centerCrop()
+                    .dontTransform()
+            )
+            .into(iv_product)
 
-            val adapter: OptionAdapter? = product.options?.let { OptionAdapter(it, this) }
-            rv_option.adapter = adapter
-        }
+        adapter = product.options?.let { OptionAdapter(it, this) }
+        rv_option.adapter = adapter
+    }
+
+    override fun onAddToCart(product: Product) {
+
     }
 }
