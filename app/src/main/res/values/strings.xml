@@ -4,4 +4,6 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="order">Order</string>
     <string name="total_price">Total price: </string>
+    <string name="add_to_cart_success">Add product to cart successfully</string>
+    <string name="add_to_cart_fail">Add product to cart fail</string>
 </resources>

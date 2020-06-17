@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.productdetail.activity.ProductDetailActivity"/>
+        <activity android:name=".view.order.activity.OrderActivity"/>
     </application>
 
 </manifest>

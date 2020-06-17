@@ -1,12 +1,17 @@
 package com.app.back4app.view.productdetail.fragment
 
+import android.content.Intent
+import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.back4app.R
 import com.app.back4app.controller.productdetail.ProductDetailFragmentController
 import com.app.back4app.controller.productdetail.ProductDetailFragmentControllerImpl
 import com.app.back4app.model.product.Product
+import com.app.back4app.realm.RealmDatabase
 import com.app.back4app.view.base.fragment.BaseFragment
 import com.app.back4app.view.base.listener.RecyclerItemListener
+import com.app.back4app.view.order.activity.OrderActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -63,6 +68,13 @@ class ProductDetailFragment(val product: Product) : BaseFragment(), ProductDetai
     }
 
     override fun onAddToCart(product: Product) {
-
+        val isAddToCart = RealmDatabase.newInstance().onSaveProductOrder(product)
+        if(isAddToCart){
+            Toast.makeText(context, getString(R.string.add_to_cart_success), Toast.LENGTH_SHORT)
+            val it = Intent(activity, OrderActivity::class.java)
+            activity?.startActivity(it)
+        }else{
+            Toast.makeText(context, getString(R.string.add_to_cart_fail), Toast.LENGTH_SHORT)
+        }
     }
 }

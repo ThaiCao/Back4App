@@ -17,5 +17,6 @@ class ProductDetailFragmentControllerImpl(val view: ProductDetailFragment): Prod
      */
     override fun onAddToCart(product: Product) {
         // save to db temp
+        view.onAddToCart(product)
     }
 }

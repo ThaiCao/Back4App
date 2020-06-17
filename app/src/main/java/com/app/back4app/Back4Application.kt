@@ -5,6 +5,9 @@ import android.content.Context
 import com.app.back4app.model.product.Product
 import com.parse.Parse
 import com.parse.ParseObject
+import io.realm.Realm
+import io.realm.RealmConfiguration
+
 
 class Back4Application: Application() {
 
@@ -28,5 +31,23 @@ class Back4Application: Application() {
                 .server("https://thaitest.back4app.io/")
                 .build()
         )
+
+        initRealm()
+    }
+
+    /**
+     * init realm
+     */
+    private fun initRealm(){
+        // Initialize Realm
+        Realm.init(context);
+    // The RealmConfiguration is created using the builder pattern.
+        val config = RealmConfiguration.Builder()
+            .name("back4app.realm")
+            .schemaVersion(1)
+            .deleteRealmIfMigrationNeeded()
+            .build()
+        // Use the config
+        val realm: Realm = Realm.getInstance(config)
     }
 }
