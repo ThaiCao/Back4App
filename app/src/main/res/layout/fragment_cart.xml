@@ -16,13 +16,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/viewPrice"
+            android:layout_alignParentTop="true"/>
 
         <LinearLayout
             android:id="@+id/viewPrice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rv_product"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="right"
             android:orientation="horizontal">

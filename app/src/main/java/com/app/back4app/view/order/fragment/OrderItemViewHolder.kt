@@ -1,6 +1,7 @@
 package com.app.back4app.view.order.fragment
 
 import android.view.View
+import com.app.back4app.R
 import com.app.back4app.model.product.Product
 import com.app.back4app.view.base.listener.RecyclerItemListener
 import com.app.back4app.view.base.viewholder.BaseViewHolder
@@ -15,7 +16,7 @@ class OrderItemViewHolder(override val containerView: View) : BaseViewHolder(con
     override fun bind(data: Any, position: Int, recyclerItemListener: RecyclerItemListener) {
         if(data is Product){
             itemView.tv_product_title.text = data.title
-            itemView.tv_product_price.text = data.price.toString()
+            itemView.tv_product_price.text = containerView.resources.getString(R.string.price) +" $"+  data.price.toString()
             Glide.with(itemView.context)
                 .load(data.picture?.url)
                 .apply(

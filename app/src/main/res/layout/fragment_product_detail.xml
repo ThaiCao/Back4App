@@ -66,4 +66,18 @@
         android:text="@string/add_to_cart"
         android:textColor="@color/white"
         android:textSize="@dimen/_14sdp" />
+
+    <FrameLayout
+        android:id="@+id/view_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:focusable="false"
+        android:background="@color/bg_transparent">
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 </RelativeLayout>

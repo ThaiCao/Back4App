@@ -1,6 +1,5 @@
 package com.app.back4app.model.order
 
-import com.app.back4app.model.product.Product
 import com.parse.ParseClassName
 import com.parse.ParseObject
 import com.parse.ktx.putOrIgnore
@@ -18,7 +17,7 @@ class Order: ParseObject()  {
         get() = getInt(KEY_AMOUNT)
         set(value) = putOrIgnore(KEY_AMOUNT, value)
 
-    var picture: List<Product>?
+    var products: List<String>?
         get() = getList(KEY_PRODUCTS)
         set(value) = putOrIgnore(KEY_PRODUCTS, value)
 }

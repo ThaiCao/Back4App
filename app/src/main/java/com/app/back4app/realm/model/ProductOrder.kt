@@ -11,6 +11,8 @@ open class ProductOrder : RealmObject() {
 
     var picture: String? = null
 
+    var pictureBitmap: ByteArray? = null
+
     var content: String? = null
 
     var options: RealmList<String>?  = RealmList()

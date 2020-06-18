@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/iv_product"
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="@dimen/_90sdp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_margin="@dimen/_10sdp"
         android:scaleType="fitXY"
         tools:src="@drawable/ic_launcher_background" />

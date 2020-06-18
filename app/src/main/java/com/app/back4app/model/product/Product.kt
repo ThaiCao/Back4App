@@ -1,5 +1,6 @@
 package com.app.back4app.model.product
 
+import android.graphics.Bitmap
 import com.parse.ParseClassName
 import com.parse.ParseFile
 import com.parse.ParseObject
@@ -29,7 +30,6 @@ class Product : ParseObject() {
     var picture: ParseFile?
         get() = getParseFile(KEY_PICTURE)
         set(value) = putOrIgnore(KEY_PICTURE, value)
-
 
     var content: String?
         get() = getString(KEY_CONTENT)

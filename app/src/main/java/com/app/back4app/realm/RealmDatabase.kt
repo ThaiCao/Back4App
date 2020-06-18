@@ -1,6 +1,5 @@
 package com.app.back4app.realm
 
-import android.content.Context
 import com.app.back4app.model.product.Product
 import com.app.back4app.realm.model.ProductOrder
 import com.parse.ParseFile
@@ -15,7 +14,7 @@ class RealmDatabase {
             RealmDatabase()
     }
 
-    fun onSaveProductOrder(product: Product) : Boolean{
+    fun onSaveProductOrder(product: Product, imageByte: ByteArray?) : Boolean{
         val realm: Realm = Realm.getDefaultInstance()
         try {
             val productOrder = ProductOrder()
@@ -23,6 +22,9 @@ class RealmDatabase {
             productOrder.content = product.content
             if(product.picture !=null && product.picture!!.url !=null){
                 productOrder.picture = product.picture!!.url
+            }
+            if(imageByte !=null){
+                productOrder.pictureBitmap = imageByte
             }
             productOrder.price = product.price
             if(product.options !=null ){
@@ -39,7 +41,7 @@ class RealmDatabase {
         } catch (ex: Exception) {
             ex.printStackTrace()
         } finally {
-            realm.close();
+            realm.close()
         }
         return false
     }
@@ -52,15 +54,21 @@ class RealmDatabase {
                 realm.where(ProductOrder::class.java).findAll()
             if (results != null && results.isNotEmpty()) {
                 for (product_: ProductOrder in results) {
-                    val product: Product = Product()
+                    val product = Product()
                     product.title = product_.title
                     product.content = product_.content
-                    if(product.picture !=null && product_.picture!!.isNotEmpty()){
-                         val file = ParseFile(product_.picture!!.toByteArray(Charsets.UTF_8))
-//                         file.save()
+//                    if(product_.picture !=null && product_.picture!!.isNotEmpty()){
+//                        val bitmap = ImageUtils.newInstance().convertImageUrlToBitmap(product_.picture!!)
+//                        if(bitmap !=null){
+//                            val file = ParseFile(ImageUtils.newInstance().encodeToByteArray(bitmap))
+////                            val file = ParseFile(ImageUtils.newInstance().encodeToByteArray(bitmap))
+//                            product.picture = file
+//                        }
+//                    }
+                    if(product_.pictureBitmap !=null ){
+                        val file = ParseFile(product_.pictureBitmap)
                         product.picture = file
                     }
-
                     product.price = product_.price
                     if(product_.options !=null ){
                         product.options = ArrayList()
@@ -68,16 +76,33 @@ class RealmDatabase {
                             (product.options!! as ArrayList<String>).add(option_)
                         }
                     }
-                    product.options = product_.options
+//                    product.options = product_.options
                     products.add(product)
                 }
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
         } finally {
-            realm.close();
+            realm.close()
         }
 
         return products
+    }
+
+    fun clearOrderData(){
+        val realm: Realm = Realm.getDefaultInstance()
+        try{
+            realm.executeTransaction { realm ->
+                val result: RealmResults<ProductOrder> =
+                    realm.where<ProductOrder>(ProductOrder::class.java)
+                        .findAll()
+                result.deleteAllFromRealm()
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        } finally {
+            realm.close()
+        }
+
     }
 }
